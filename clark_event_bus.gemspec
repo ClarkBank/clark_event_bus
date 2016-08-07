@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'clark/event_bus/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "event_bus"
+  spec.name          = "clark_event_bus"
   spec.version       = Clark::EventBus::VERSION
   spec.authors       = ["Rafael Jesus"]
   spec.email         = ["rafaelljesus86@gmail.com"]
