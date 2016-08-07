@@ -1,7 +1,7 @@
 ## Clark Event Bus
 
-* Exposes aditional methods (trigger and on) for messaging features for events
-that may occurr on Clark Bank Applications
+* Shared between bank_api and bank_events, so they trigger and listen to events
+that may occurr on Clark Bank Applications.
 
 ## Installation
 
@@ -11,15 +11,10 @@ Add this line to your application's Gemfile:
 gem 'clark_event_bus'
 ```
 
-Or install it yourself as:
-
-gem install clark_event_bus
-```
-
 ## Usage
 
 ### Emitter
-``ruby
+```ruby
 emitter = Clark::EventBus::Emitter.new(options)
 routing_key = 'user.registered'
 payload = {email: 'foo@mail.com'}.to_json
@@ -27,7 +22,7 @@ emitter.trigger(payload, routing_key)
 ```
 
 ### Listener
-``ruby
+```ruby
 listener = Clark::EventBus::Listener.new(options)
 listener.on("user.registered") do |event|
 end
