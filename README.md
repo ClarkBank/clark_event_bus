@@ -1,8 +1,7 @@
-# ClarkEventBus
+## Clark Event Bus
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/clark_event_bus`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+* Exposes aditional methods (trigger and on) for messaging features for events
+that may occurr on Clark Bank Applications
 
 ## Installation
 
@@ -12,30 +11,43 @@ Add this line to your application's Gemfile:
 gem 'clark_event_bus'
 ```
 
-And then execute:
-
-    $ bundle
-
 Or install it yourself as:
 
-    $ gem install clark_event_bus
+gem install clark_event_bus
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+### Emitter
+``ruby
+emitter = Clark::EventBus::Emitter.new(options)
+routing_key = 'user.registered'
+payload = {email: 'foo@mail.com'}.to_json
+emitter.trigger(payload, routing_key)
+```
 
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+### Listener
+``ruby
+listener = Clark::EventBus::Listener.new(options)
+listener.on("user.registered") do |event|
+end
+```
 
 ## Contributing
+- Fork it
+- Create your feature branch (`git checkout -b my-new-feature`)
+- Commit your changes (`git commit -am 'Add some feature'`)
+- Push to the branch (`git push origin my-new-feature`)
+- Create new Pull Request
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/clark_event_bus.
+## Badges
 
+[![CircleCI](https://circleci.com/gh/ClarkBank/clark_event_bus.svg?style=svg)](https://circleci.com/gh/ClarkBank/clark_event_bus)
+[![Code Climate](https://codeclimate.com/github/rafaeljesus/bank_ror/badges/gpa.svg)](https://codeclimate.com/github/rafaeljesus/bank_ror)
+[![Test Coverage](https://codeclimate.com/github/rafaeljesus/bank_ror/badges/coverage.svg)](https://codeclimate.com/github/rafaeljesus/bank_ror/coverage)
+[![Issue Count](https://codeclimate.com/github/rafaeljesus/bank_ror/badges/issue_count.svg)](https://codeclimate.com/github/rafaeljesus/bank_ror)
 
-## License
+---
 
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
+> GitHub [@rafaeljesus](https://github.com/rafaeljesus) &nbsp;&middot;&nbsp;
+> Twitter [@rafaeljesus](https://twitter.com/_jesus_rafael)
