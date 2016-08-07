@@ -1,23 +1,28 @@
+require 'bunny'
+
 module Clark
   module EventBus
-    class Emitter
-      def initialize
+    class Listener
+      def initialize(options: {})
+        @session = Bunny.new(options)
       end
 
-      def trigger(payload, routing_key)
+      def on(queue_name, options, &block)
+        raise ArgumentError.new('queue name must be present') unless queue_name && queue_name.size > 0
+        queue(queue_name).subscribe(options, &block)
       end
 
       private
-      def topic_options
-        {
-          topic: ENV['RABBIT_TOPIC'],
-          options: {
-            vhost: ENV['RABBIT_VHOST'],
-            host: ENV['RABBIT_HOST'],
-            heartbeat: 1,
-            continuation_timeout: 60000
-          }
-        }
+      def queue(name)
+        channel = create_channel
+        channel.queue(name, {durable: true})
+      end
+
+      def create_channel
+        @channel ||= begin
+          @session.start
+          @session.create_channel
+        end
       end
     end
   end
