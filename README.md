@@ -3,6 +3,10 @@
 * Shared between bank_api and bank_events, so they trigger and listen to events
 that may occurr on Clark Bank Applications.
 
+<p align='center'>
+  <img src='https://raw.githubusercontent.com/ClarkBank/clark_event_bus/master/event_bus.jpg' alt='EventBus'>
+</p>
+
 ## Installation
 
 Add this line to your application's Gemfile:
