@@ -11,7 +11,7 @@ module Clark
 
       def trigger(payload, routing_key)
         raise ArgumentError.new('payload message must be present') unless payload && !payload.empty?
-        exchange.publish(payload, routing_key: routing_key)
+        exchange.publish(payload, routing_key: routing_key, persistent: true)
       end
 
       private

@@ -9,20 +9,28 @@ module Clark
 
       def on(queue_name, options = {}, &block)
         raise ArgumentError.new('queue name must be present') unless queue_name && queue_name.size > 0
-        queue(queue_name).subscribe(options, &block)
+
+        queue(queue_name)
+          .bind(event_bus_exchange, routing_key: queue_name)
+          .subscribe(options, &block)
       end
 
       private
       def queue(name)
-        channel = create_channel
-        channel.queue(name, {durable: true})
+        channel.queue(name, durable: true)
+      end
+
+      def channel
+        @channel ||= create_channel
       end
 
       def create_channel
-        @channel ||= begin
-          @session.start
-          @session.create_channel
-        end
+        @session.start
+        @session.create_channel
+      end
+
+      def event_bus_exchange
+        channel.topic('events', durable: true, auto_delete: false)
       end
     end
   end

@@ -32,6 +32,12 @@ describe Clark::EventBus::Listener do
 
     before do
       allow(channel).to receive(:queue).and_return(queue)
+      allow(channel).to receive(:topic)
+        .with('events', durable: true, auto_delete: false)
+        .and_return(queue)
+      allow(queue).to receive(:bind)
+        .with(queue, routing_key: queue_name)
+        .and_return(queue)
     end
 
     context 'when queue_name is nil' do

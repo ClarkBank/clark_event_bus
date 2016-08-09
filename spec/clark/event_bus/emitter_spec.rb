@@ -44,7 +44,8 @@ describe Clark::EventBus::Emitter do
       let(:routing_key) { 'routing_key' }
 
       it 'publishes a message on exchange' do
-        expect(exchange).to receive(:publish).with(payload, routing_key: routing_key)
+        expect(exchange).to receive(:publish)
+          .with(payload, routing_key: routing_key, persistent: true)
         subject
       end
     end
